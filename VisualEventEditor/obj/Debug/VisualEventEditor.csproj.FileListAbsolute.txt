@@ -1,0 +1,9 @@
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\VisualEventEditor.exe.config
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\VisualEventEditor.exe
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\VisualEventEditor.pdb
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.csprojResolveAssemblyReference.cache
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.Form1.resources
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.Properties.Resources.resources
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.csproj.GenerateResource.Cache
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.exe
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.pdb
