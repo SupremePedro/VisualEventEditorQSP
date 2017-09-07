@@ -198,7 +198,7 @@ namespace VisualEventEditor
             }
       
         }
-
+        //chek
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             for(int i=0; i < rectList.Count();++i)
