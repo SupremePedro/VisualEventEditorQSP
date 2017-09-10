@@ -49,15 +49,30 @@ namespace VisualEventEditor
         List<RectObj> rectList = new List<RectObj>();
 
         private Point p1,p2;
+        Point rectPoint;
         List<Point> p1List = new List<Point>();
         List<Point> p2List = new List<Point>();
+        List<Point> rectPointList = new List<Point>();
 
         public class RectObj
         {
             Rectangle rect;
             bool isClicked;
             Point pointW;
+            List<Point> inputPoint = new List<Point>();
 
+            public List<Point> InputPoint
+            {
+                get { return inputPoint; }
+                set { inputPoint = value; }
+            }
+            List<Point> outputPoint = new List<Point>();
+
+            public List<Point> OutputPoint
+            {
+                get { return outputPoint; }
+                set { outputPoint = value; }
+            }
             public Point PointW
             {
                 get { return pointW; }
@@ -172,7 +187,26 @@ namespace VisualEventEditor
                 {
 
                     rectList.ElementAt(i).Rect = new Rectangle(e.X - deltaX, e.Y - deltaY, rectList.ElementAt(i).Rect.Width, rectList.ElementAt(i).Rect.Height);
-                   
+                    for (int j = 0; j < p1List.Count; ++j)
+                    {
+                        if (rectPointList.ElementAt(j).X == i)
+                        {
+                            Point newPoint = new Point { X = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width + triLength, Y = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 };
+                            p1List.RemoveAt(j);
+                            p1List.Insert(j,newPoint);
+                                                        
+                        }
+                    }
+                    for (int j = 0; j < p1List.Count; ++j)
+                    {
+                        if (rectPointList.ElementAt(j).Y == i)
+                        {
+                            Point newPoint =new Point { X =rectList.ElementAt(i).Rect.X - triLength , Y =rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2  };
+                            p2List.RemoveAt(j);
+                            p2List.Insert(j,newPoint);
+                                                        
+                        }
+                    }
 
                     pictureBox1.Invalidate();
                 }
@@ -208,12 +242,21 @@ namespace VisualEventEditor
                       (e.X * (yy2 - yy3) + (xx3 - xx2) * e.Y + (xx2 * yy3 - xx3 * yy2) < 0) &&
                       (e.X * (yy3 - yy1) + (xx1 - xx3) * e.Y + (xx3 * yy1 - xx1 * yy3) < 0))
                     {
-                        p2.X = e.X;
-                        p2.Y = e.Y;
+                        p2.X = rectList.ElementAt(i).Rect.X - triLength;
+                        p2.Y = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2;
+                        rectPoint.Y = i;
                         p1List.Add(p1);
                         p2List.Add(p2);
-                        p1.X =p2.X=p1.Y=p2.Y= 0;                        
+
+
+                        rectPointList.Add(rectPoint);
+                        p1.X = p2.X = p1.Y = p2.Y = 0;
+                        rectPoint.X = 0;
+                        rectPoint.Y = 0;
                         Invalidate();
+                    }
+                    else
+                    {
                     }
                   }
             }
@@ -233,8 +276,10 @@ namespace VisualEventEditor
                     (e.X * (y2 - y3) + (x3 - x2) * e.Y + (x2 * y3 - x3 * y2) < 0) &&
                     (e.X * (y3 - y1) + (x1 - x3) * e.Y + (x3 * y1 - x1 * y3) < 0))
                     {
-                        p1.X = e.X;
-                        p1.Y = e.Y;
+                       
+                        p1.X = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width + triLength;
+                        p1.Y = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2;
+                        rectPoint.X = i;
 
                     }
                 } 
