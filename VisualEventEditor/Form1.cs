@@ -147,58 +147,8 @@ namespace VisualEventEditor
                         deltaX = e.X - rectList.ElementAt(i).Rect.X;
                         deltaY = e.Y - rectList.ElementAt(i).Rect.Y;
                     }
-                //line create
-                {
-                    int x1 = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width + triLength;
-                    int x2 = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width;
-                    int x3 = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width;
-                    int y1 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2;
-                    int y2 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 - triLength;
-                    int y3 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 + triLength;
-
-                    if ((e.X * (y1 - y2) + (x2 - x1) * e.Y + (x1 * y2 - x2 * y1) < 0) &&
-                    (e.X * (y2 - y3) + (x3 - x2) * e.Y + (x2 * y3 - x3 * y2) < 0) &&
-                    (e.X * (y3 - y1) + (x1 - x3) * e.Y + (x3 * y1 - x1 * y3) < 0)&&
-                        (p1.X==0))
-                    {
-                        p1.X = e.X;
-                        p1.Y = e.Y;
-                        session = session * (-1) ;
-                    }
-                } 
-              }
-            for (int i = 0; i < rectList.Count(); i++)
-            {
-                if (start_session == session)
-                {
-                    int xx1 = rectList.ElementAt(i).Rect.X - triLength;
-                    int xx2 = rectList.ElementAt(i).Rect.X;
-                    int xx3 = rectList.ElementAt(i).Rect.X;
-                    int yy1 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2;
-                    int yy2 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 + triLength;
-                    int yy3 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 - triLength;
-
-                    if ((e.X * (yy1 - yy2) + (xx2 - xx1) * e.Y + (xx1 * yy2 - xx2 * yy1) < 0) &&
-                      (e.X * (yy2 - yy3) + (xx3 - xx2) * e.Y + (xx2 * yy3 - xx3 * yy2) < 0) &&
-                      (e.X * (yy3 - yy1) + (xx1 - xx3) * e.Y + (xx3 * yy1 - xx1 * yy3) < 0) &&
-                       !(p1.X == 0))
-                    {
-                        p2.X = e.X;
-                        p2.Y = e.Y;
-                        p1List.Add(p1);
-                        p2List.Add(p2);
-                        Invalidate();
-                    }
-                    else
-                    {
-                        p1.X = 0;
-                        p1.Y = 0;
-                    }
-                }
-            }
-      
+              }      
         }
-        //chek
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             for(int i=0; i < rectList.Count();++i)
@@ -240,6 +190,66 @@ namespace VisualEventEditor
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
+
+            //block for p2
+            if (p1.X+p1.Y!=0)
+            {
+                for (int i = 0; i < rectList.Count(); i++)
+                {
+                
+                    int xx1 = rectList.ElementAt(i).Rect.X - triLength;
+                    int xx2 = rectList.ElementAt(i).Rect.X;
+                    int xx3 = rectList.ElementAt(i).Rect.X;
+                    int yy1 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2;
+                    int yy2 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 + triLength;
+                    int yy3 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 - triLength;
+
+                    if ((e.X * (yy1 - yy2) + (xx2 - xx1) * e.Y + (xx1 * yy2 - xx2 * yy1) < 0) &&
+                      (e.X * (yy2 - yy3) + (xx3 - xx2) * e.Y + (xx2 * yy3 - xx3 * yy2) < 0) &&
+                      (e.X * (yy3 - yy1) + (xx1 - xx3) * e.Y + (xx3 * yy1 - xx1 * yy3) < 0))
+                    {
+                        p2.X = e.X;
+                        p2.Y = e.Y;
+                        p1List.Add(p1);
+                        p2List.Add(p2);
+                        p1.X =p2.X=p1.Y=p2.Y= 0;                        
+                        Invalidate();
+                    }
+                  }
+            }
+            //block for p1
+            else
+            {
+                for (int i = 0; i < rectList.Count(); i++)
+                {
+                    int x1 = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width + triLength;
+                    int x2 = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width;
+                    int x3 = rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width;
+                    int y1 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2;
+                    int y2 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 - triLength;
+                    int y3 = rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height / 2 + triLength;
+
+                    if ((e.X * (y1 - y2) + (x2 - x1) * e.Y + (x1 * y2 - x2 * y1) < 0) &&
+                    (e.X * (y2 - y3) + (x3 - x2) * e.Y + (x2 * y3 - x3 * y2) < 0) &&
+                    (e.X * (y3 - y1) + (x1 - x3) * e.Y + (x3 * y1 - x1 * y3) < 0))
+                    {
+                        p1.X = e.X;
+                        p1.Y = e.Y;
+
+                    }
+                } 
+
+            }
+
+            
+
+                        //line create
+
+
+
+           
+
+            //end create line
             //int x1 = rectGlobal.X + rectGlobal.Width / 2;
             //int x2 = rectGlobal.X + rectGlobal.Width / 2 - triLength;
             //int x3 = rectGlobal.X + rectGlobal.Width / 2 + triLength;
