@@ -16,7 +16,6 @@ namespace VisualEventEditor
         {
             InitializeComponent();
             img = Bitmap.FromFile("E:\\GO\\hhs+\\Schools\\NormalSchool\\Images\\People\\Student\\Casual_01\\Female_0.png");
-            session = -1;
             p1.X = 0;
             p1.Y = 0;
             p2.X = 0;
@@ -37,15 +36,13 @@ namespace VisualEventEditor
             // attach the right click menu with form
             this.ContextMenuStrip = s;
         }
+
         private Image img;
 
-        int session;
-        bool IsClicked = false;
-        int TriangleOpen = 1;
         int deltaY = 0;
         int deltaX = 0;
         int triLength = 30;
-        Rectangle rectGlobal = new Rectangle(10, 10, 200, 100);
+       
         List<RectObj> rectList = new List<RectObj>();
 
         private Point p1,p2;
@@ -152,11 +149,10 @@ namespace VisualEventEditor
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            int start_session=session;
             for (int i = 0; i < rectList.Count(); i++)
             {
                 if ((e.X < rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width) && (e.X > rectList.ElementAt(i).Rect.X))
-                    if ((e.Y < rectList.ElementAt(i).Rect.Y + rectGlobal.Height) && (e.Y > rectList.ElementAt(i).Rect.Y))
+                    if ((e.Y < rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height) && (e.Y > rectList.ElementAt(i).Rect.Y))
                     {
                         rectList.ElementAt(i).IsClicked = true;
                         deltaX = e.X - rectList.ElementAt(i).Rect.X;
@@ -320,6 +316,92 @@ namespace VisualEventEditor
             //    }
             //}
 
+            pictureBox1.Invalidate();
+        }
+
+        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        {
+         
+            for (int i = 0; i < rectList.Count(); i++)
+            {
+                if ((Cursor.Position.X < rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width) && (Cursor.Position.X > rectList.ElementAt(i).Rect.X))
+                    if ((Cursor.Position.Y < rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height) && (Cursor.Position.Y > rectList.ElementAt(i).Rect.Y))
+                    {
+                       LocEditForm yourForm = new LocEditForm();
+                       yourForm.ShowDialog();
+                    }
+            }  
+            
+        }
+
+        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void сохраранитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           using (System.IO.StreamWriter file =
+           new System.IO.StreamWriter(@"E:\dev\save.txt"))
+            {
+                file.WriteLine(rectList.Count());
+                for(int i=0;i<rectList.Count();i++)
+                {
+                    
+                        file.WriteLine(rectList.ElementAt(i).Rect.X.ToString()+" "
+                            + rectList.ElementAt(i).Rect.Y.ToString()+" "
+                            + rectList.ElementAt(i).Rect.Width.ToString() + " "
+                             + rectList.ElementAt(i).Rect.Height.ToString());
+                        //List<Point> p1List = new List<Point>();
+                        //List<Point> p2List = new List<Point>();
+                        //List<Point> rectPointList = new List<Point>();
+                }
+                file.WriteLine(p1List.Count());
+                for (int i = 0; i < p1List.Count(); i++)
+                {
+                    file.WriteLine(p1List.ElementAt(i).X.ToString() + " "
+                            + p1List.ElementAt(i).Y.ToString() + " "
+                            + p2List.ElementAt(i).X.ToString() + " "
+                            + p2List.ElementAt(i).Y.ToString() + " "
+                            + rectPointList.ElementAt(i).X.ToString()+ " "
+                            + rectPointList.ElementAt(i).Y.ToString());
+                }
+            }
+        }
+
+        private void загрузитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] lines = System.IO.File.ReadAllLines(@"E:\dev\save.txt");
+            for (int i = 1; i < Int32.Parse(lines[0])+1; ++i)
+            {
+                string [] split = lines[i].Split(new Char [] {' ', ',', '.', ':', '\t' });
+                RectObj r = new RectObj();
+                r.Rect = new Rectangle(Int32.Parse(split.ElementAt(0)), Int32.Parse(split.ElementAt(1)), Int32.Parse(split.ElementAt(2)), Int32.Parse(split.ElementAt(3)));
+                r.IsClicked = false;
+                rectList.Add(r);
+               
+            }
+            for (int i = Int32.Parse(lines[0]) + 2; i < Int32.Parse(lines[0]) + Int32.Parse(lines[Int32.Parse(lines[0]) + 1]) + 1; ++i)
+            {
+                string[] split = lines[i].Split(new Char[] { ' ', ',', '.', ':', '\t' });
+
+                Point p1 = new Point(Int32.Parse(split[0]), Int32.Parse(split[1]));
+                Point p2 = new Point(Int32.Parse(split[2]), Int32.Parse(split[3]));
+                Point p3 = new Point(Int32.Parse(split[4]), Int32.Parse(split[5]));
+
+                p1List.Add(p1);
+                p2List.Add(p2);
+                rectPointList.Add(p3);
+            }
+            pictureBox1.Invalidate();
+        }
+
+        private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rectList.Clear();
+            p1List.Clear();
+            p2List.Clear();
+            rectPointList.Clear();
             pictureBox1.Invalidate();
         }
 

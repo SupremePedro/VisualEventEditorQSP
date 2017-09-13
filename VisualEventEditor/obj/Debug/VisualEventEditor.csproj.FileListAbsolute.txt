@@ -7,3 +7,4 @@ E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.P
 E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.csproj.GenerateResource.Cache
 E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.exe
 E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.pdb
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.LocEditForm.resources
