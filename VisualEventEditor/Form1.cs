@@ -25,25 +25,32 @@ namespace VisualEventEditor
 
             // add one right click menu item named as hello           
             ToolStripMenuItem add = new ToolStripMenuItem();
+            ToolStripMenuItem add_label = new ToolStripMenuItem();
             add.Text = "Add new item...";
-
+            add_label.Text = "Add label";
             // add the clickevent of hello item
             add.Click += add_Item;
+            add_label.Click += add_Label;
 
             // add the item in right click menu
             s.Items.Add(add);
-
+            s.Items.Add(add_label);
             // attach the right click menu with form
             this.ContextMenuStrip = s;
         }
 
         private Image img;
 
+        private LocEditForm locEditForm;
+
         int deltaY = 0;
         int deltaX = 0;
         int triLength = 30;
        
         List<RectObj> rectList = new List<RectObj>();
+
+
+        Label ShtLocDescription = new Label();
 
         private Point p1,p2;
         Point rectPoint;
@@ -64,7 +71,23 @@ namespace VisualEventEditor
                 set { inputPoint = value; }
             }
             List<Point> outputPoint = new List<Point>();
+            string locName;
 
+            public string LocName
+            {
+                get { return locName; }
+                set { locName = value; }
+            }
+
+            string shtLocDescription;
+
+            public string ShtLocDescription
+            {
+                get { return shtLocDescription; }
+                set { shtLocDescription = value; }
+            }
+
+           
             public List<Point> OutputPoint
             {
                 get { return outputPoint; }
@@ -107,7 +130,7 @@ namespace VisualEventEditor
                     }
 
             }
-            public void rectObj_Paint(object sender, PaintEventArgs e, Rectangle rect)
+            public void rectObj_Paint(object sender, PaintEventArgs e, Rectangle rect,string description,string locName)
             {
                 Brush brush = new SolidBrush(Color.Black);
                 Pen pen = new Pen(Color.Red);
@@ -129,22 +152,45 @@ namespace VisualEventEditor
                 e.Graphics.DrawPolygon(pen, points);
                 e.Graphics.DrawPolygon(pen, rghtPoints);
                 e.Graphics.FillPolygon(brush,lftPoints);
+                e.Graphics.DrawString(description, new Font("Arial", 10), Brushes.Green, new Point(rect.X+10, rect.Y+10));
+                e.Graphics.DrawString(locName, new Font("Arial", 14), Brushes.DarkBlue, new Point(rect.X, rect.Y - 30));
 
             }
         }
       
         void add_Item(object sender, EventArgs e)
-        {
+        {            
             RectObj r = new RectObj();
             r.Rect = new Rectangle(100, 100, 200, 100);
             r.IsClicked = false;
+            r.ShtLocDescription =  " rect" + rectList.Count().ToString();
+            r.LocName = "";
+
+            
             rectList.Add(r);
+            pictureBox1.Invalidate();
+        }
+        void add_Label(object sender, EventArgs e)
+        {
+
+            ShtLocDescription.Text = "asdsadad";//1
+            ShtLocDescription.Location = new Point(300, 300);//2
+            ShtLocDescription.Size = new Size(200, 200);//3
+            ShtLocDescription.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Regular);//4
+            ShtLocDescription.ForeColor = Color.Red;//5
+
+            this.Controls.Add(ShtLocDescription);//6
+            {
+                ShtLocDescription.BringToFront();
+            }
+
             pictureBox1.Invalidate();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            locEditForm = new LocEditForm();
+            
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -164,7 +210,8 @@ namespace VisualEventEditor
         {
             for(int i=0; i < rectList.Count();++i)
             {
-                rectList.ElementAt(i).rectObj_Paint(sender, e, rectList.ElementAt(i).Rect);
+                rectList.ElementAt(i).rectObj_Paint(sender, e, rectList.ElementAt(i).Rect, rectList.ElementAt(i).ShtLocDescription, rectList.ElementAt(i).LocName);
+                
             }
             using (var p = new Pen(Color.Blue, 4))
             {
@@ -181,8 +228,9 @@ namespace VisualEventEditor
             {
                 if (rectList.ElementAt(i).IsClicked)
                 {
-
+                    //change position on move
                     rectList.ElementAt(i).Rect = new Rectangle(e.X - deltaX, e.Y - deltaY, rectList.ElementAt(i).Rect.Width, rectList.ElementAt(i).Rect.Height);
+                    //rectList.ElementAt(i).ShtLocDescription.Location = new Point(rectList.ElementAt(i).Rect.X + 10, rectList.ElementAt(i).Rect.Y + 10);
                     for (int j = 0; j < p1List.Count; ++j)
                     {
                         if (rectPointList.ElementAt(j).X == i)
@@ -211,7 +259,6 @@ namespace VisualEventEditor
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //IsClicked = false;
             for (int i = 0; i < rectList.Count(); ++i)
             {
                 rectList.ElementAt(i).IsClicked = false;
@@ -327,8 +374,12 @@ namespace VisualEventEditor
                 if ((Cursor.Position.X < rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width) && (Cursor.Position.X > rectList.ElementAt(i).Rect.X))
                     if ((Cursor.Position.Y < rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height) && (Cursor.Position.Y > rectList.ElementAt(i).Rect.Y))
                     {
-                       LocEditForm yourForm = new LocEditForm();
-                       yourForm.ShowDialog();
+                        if (locEditForm.ShowDialog() == DialogResult.OK)
+                        {
+                            rectList.ElementAt(i).LocName = locEditForm.txtLocName.Text;
+                            rectList.ElementAt(i).ShtLocDescription = locEditForm.txtShtLocDescription.Text;
+                            pictureBox1.Invalidate();
+                        }
                     }
             }  
             

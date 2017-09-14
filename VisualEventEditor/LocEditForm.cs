@@ -14,9 +14,27 @@ namespace VisualEventEditor
 {
     public partial class LocEditForm : Form
     {
+       // string theValue;
+        private string locName;
+        private string shtLocDescription;
+
+        public string ShtLocDescription
+        {
+            get { return shtLocDescription; }
+            set { shtLocDescription = value; }
+        }
+
+        public string LocName
+        {
+            get { return locName; }
+            set { locName = value; }
+        }
+        
         public LocEditForm()
         {
             InitializeComponent();
+            txtLocName.Text = locName;
+            txtShtLocDescription.Text = shtLocDescription;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -35,5 +53,12 @@ namespace VisualEventEditor
             cmd.WaitForExit();
             
         }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            LocName = txtLocName.Text;
+            ShtLocDescription = txtShtLocDescription.Text;
+        }
+
     }
 }
