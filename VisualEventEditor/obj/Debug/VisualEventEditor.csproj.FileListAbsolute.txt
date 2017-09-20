@@ -8,3 +8,7 @@ E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.c
 E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.exe
 E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.pdb
 E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.LocEditForm.resources
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\Microsoft.Web.XmlTransform.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\NuGet.Core.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\Newtonsoft.Json.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\Newtonsoft.Json.xml

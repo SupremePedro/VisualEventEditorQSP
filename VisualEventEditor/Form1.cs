@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace VisualEventEditor
 {
@@ -60,17 +63,12 @@ namespace VisualEventEditor
 
         public class RectObj
         {
+
             Rectangle rect;
             bool isClicked;
-            Point pointW;
-            List<Point> inputPoint = new List<Point>();
-
-            public List<Point> InputPoint
-            {
-                get { return inputPoint; }
-                set { inputPoint = value; }
-            }
-            List<Point> outputPoint = new List<Point>();
+            
+           
+           
             string locName;
 
             public string LocName
@@ -88,24 +86,8 @@ namespace VisualEventEditor
             }
 
            
-            public List<Point> OutputPoint
-            {
-                get { return outputPoint; }
-                set { outputPoint = value; }
-            }
-            public Point PointW
-            {
-                get { return pointW; }
-                set { pointW = value; }
-            }
-            Point pointB;
 
-            public Point PointB
-            {
-                get { return pointB; }
-                set { pointB = value; }
-            }
-
+            
             public bool IsClicked
             {
                 get { return isClicked; }
@@ -454,6 +436,31 @@ namespace VisualEventEditor
             p2List.Clear();
             rectPointList.Clear();
             pictureBox1.Invalidate();
+        }
+
+        private void загрузитьJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string json = System.IO.File.ReadAllText(@"E:\json.txt"); ;
+            List<RectObj> rectJson = JsonConvert.DeserializeObject<List<RectObj>>(json);
+            rectList = rectJson;
+            pictureBox1.Invalidate();
+        }
+
+        private void создатьJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<RectObj> _data = rectList;
+
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+
+            using (StreamWriter sw = new StreamWriter(@"E:\json.txt"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, _data);
+            }
+            
+            
+            
         }
 
     }

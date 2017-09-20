@@ -34,6 +34,8 @@
             this.сохраранитьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.загрузитьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.очиститьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.создатьJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +70,9 @@
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.сохраранитьФайлToolStripMenuItem,
             this.загрузитьФайлToolStripMenuItem,
-            this.очиститьToolStripMenuItem});
+            this.очиститьToolStripMenuItem,
+            this.создатьJSONToolStripMenuItem,
+            this.загрузитьJSONToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
@@ -94,6 +98,20 @@
             this.очиститьToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.очиститьToolStripMenuItem.Text = "Очистить";
             this.очиститьToolStripMenuItem.Click += new System.EventHandler(this.очиститьToolStripMenuItem_Click);
+            // 
+            // создатьJSONToolStripMenuItem
+            // 
+            this.создатьJSONToolStripMenuItem.Name = "создатьJSONToolStripMenuItem";
+            this.создатьJSONToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.создатьJSONToolStripMenuItem.Text = "Создать JSON";
+            this.создатьJSONToolStripMenuItem.Click += new System.EventHandler(this.создатьJSONToolStripMenuItem_Click);
+            // 
+            // загрузитьJSONToolStripMenuItem
+            // 
+            this.загрузитьJSONToolStripMenuItem.Name = "загрузитьJSONToolStripMenuItem";
+            this.загрузитьJSONToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.загрузитьJSONToolStripMenuItem.Text = "Загрузить JSON";
+            this.загрузитьJSONToolStripMenuItem.Click += new System.EventHandler(this.загрузитьJSONToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -122,9 +140,8 @@
         private System.Windows.Forms.ToolStripMenuItem сохраранитьФайлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem загрузитьФайлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
-
-
-
+        private System.Windows.Forms.ToolStripMenuItem создатьJSONToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьJSONToolStripMenuItem;
     }
 }
 
