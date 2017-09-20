@@ -66,7 +66,7 @@ namespace VisualEventEditor
             file.WriteLine("!'"+ShtLocDescription+"'");
             file.Close();
 
-            String[] s = txtLocContent.Text.Split(new String[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            String[] s = txtLocContent.Text.Split(new String[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = s.Count() - 1; i >= 0; --i)
             {
                 var allLines = File.ReadAllLines("E:\\dev\\Location\\" + LocName.Trim()+".txt").ToList();

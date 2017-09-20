@@ -323,7 +323,27 @@ namespace VisualEventEditor
                 if ((Cursor.Position.X < rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width) && (Cursor.Position.X > rectList.ElementAt(i).Rect.X))
                     if ((Cursor.Position.Y < rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height) && (Cursor.Position.Y > rectList.ElementAt(i).Rect.Y))
                     {
-                        locEditForm.txtLocContent.Text = "";
+                        locEditForm.txtLocContent.Text = "";                       
+                        locEditForm.txtShtLocDescription.Text = rectList.ElementAt(i).ShtLocDescription;
+                        locEditForm.txtLocName.Text = rectList.ElementAt(i).LocName;
+                        
+                        for (int j = 0; j < rectPointList.Count(); j++)
+                        {
+                            if (rectPointList.ElementAt(j).X == i)
+                            {
+                                for (int l = 0; l < rectPointList.Count(); l++)
+                                {
+                                    if(rectPointList.ElementAt(j).Y==l)
+                                    locEditForm.txtLocContent.AppendText("ACT 'go to " + rectList.ElementAt(i).LocName + "':" + " \r\n"
+                                        + " gt '" + rectList.ElementAt(l).LocName + "'" + " \r\n" +
+                                        "END" + " \r\n");
+                                }
+                            }
+                            
+                        }
+                        locEditForm.txtLocContent.AppendText("*P '" + rectList.ElementAt(i).LocName + "'");
+
+
                         if (locEditForm.ShowDialog() == DialogResult.OK)
                         {
                            
