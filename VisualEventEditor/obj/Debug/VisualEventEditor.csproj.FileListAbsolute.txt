@@ -12,3 +12,11 @@ E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\Microsoft.Web.XmlTr
 E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\NuGet.Core.dll
 E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\Newtonsoft.Json.dll
 E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\Newtonsoft.Json.xml
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\EntityFramework.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\EntityFramework.SqlServer.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\System.Data.SQLite.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\System.Data.SQLite.EF6.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\System.Data.SQLite.Linq.dll
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\EntityFramework.xml
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\EntityFramework.SqlServer.xml
+E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\System.Data.SQLite.xml

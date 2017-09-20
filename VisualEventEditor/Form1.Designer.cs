@@ -36,6 +36,7 @@
             this.очиститьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.загрузитьJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gENERATECODEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +59,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem});
+            this.файлToolStripMenuItem,
+            this.gENERATECODEToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(977, 24);
@@ -113,6 +115,13 @@
             this.загрузитьJSONToolStripMenuItem.Text = "Загрузить JSON";
             this.загрузитьJSONToolStripMenuItem.Click += new System.EventHandler(this.загрузитьJSONToolStripMenuItem_Click);
             // 
+            // gENERATECODEToolStripMenuItem
+            // 
+            this.gENERATECODEToolStripMenuItem.Name = "gENERATECODEToolStripMenuItem";
+            this.gENERATECODEToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
+            this.gENERATECODEToolStripMenuItem.Text = "GENERATE CODE";
+            this.gENERATECODEToolStripMenuItem.Click += new System.EventHandler(this.gENERATECODEToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +151,7 @@
         private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem создатьJSONToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem загрузитьJSONToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gENERATECODEToolStripMenuItem;
     }
 }
 

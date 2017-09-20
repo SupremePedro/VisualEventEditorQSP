@@ -58,6 +58,30 @@ namespace VisualEventEditor
         {
             LocName = txtLocName.Text;
             ShtLocDescription = txtShtLocDescription.Text;
+
+            //create file locName.txt
+
+            
+            System.IO.StreamWriter file = new System.IO.StreamWriter("E:\\dev\\Location\\" + LocName.Trim() + ".txt");
+            file.WriteLine("!'"+ShtLocDescription+"'");
+            file.Close();
+
+            String[] s = txtLocContent.Text.Split(new String[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = s.Count() - 1; i >= 0; --i)
+            {
+                var allLines = File.ReadAllLines("E:\\dev\\Location\\" + LocName.Trim()+".txt").ToList();
+                allLines.Insert(0, s.ElementAt(i));
+                File.WriteAllLines("E:\\dev\\Location\\" + LocName.Trim() + ".txt", allLines.ToArray());
+            }
+
+
+
+            //System.IO.StreamWriter file = new System.IO.StreamWriter("E:\\dev\\Location\\" + LocName + ".txt"); // Write the string to a file.
+            //
+            //file.Close();
+
+            //end creation
+
         }
 
     }

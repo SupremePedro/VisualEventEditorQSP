@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace VisualEventEditor
 {
@@ -310,42 +312,7 @@ namespace VisualEventEditor
                 } 
 
             }
-
-            
-
-                        //line create
-
-
-
-           
-
-            //end create line
-            //int x1 = rectGlobal.X + rectGlobal.Width / 2;
-            //int x2 = rectGlobal.X + rectGlobal.Width / 2 - triLength;
-            //int x3 = rectGlobal.X + rectGlobal.Width / 2 + triLength;
-            //int y1 = rectGlobal.Y + rectGlobal.Height - triLength * TriangleOpen;
-            //int y2 = rectGlobal.Y + rectGlobal.Height;
-            //int y3 = rectGlobal.Y + rectGlobal.Height;
-            //if (TriangleOpen == 1)
-            //{
-            //    if ((e.X * (y1 - y2) + (x2 - x1) * e.Y + (x1 * y2 - x2 * y1) < 0) &&
-            //        (e.X * (y2 - y3) + (x3 - x2) * e.Y + (x2 * y3 - x3 * y2) < 0) &&
-            //        (e.X * (y3 - y1) + (x1 - x3) * e.Y + (x3 * y1 - x1 * y3) < 0))
-            //    {
-            //        TriangleOpen = -1;
-            //    }
-            //}
-            //else
-            //{
-            //    if ((e.X * (y1 - y2) + (x2 - x1) * e.Y + (x1 * y2 - x2 * y1) > 0) &&
-            //        (e.X * (y2 - y3) + (x3 - x2) * e.Y + (x2 * y3 - x3 * y2) > 0) &&
-            //        (e.X * (y3 - y1) + (x1 - x3) * e.Y + (x3 * y1 - x1 * y3) > 0))
-            //    {
-            //        TriangleOpen = 1;
-            //    }
-            //}
-
-            pictureBox1.Invalidate();
+          pictureBox1.Invalidate();
         }
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
@@ -356,10 +323,37 @@ namespace VisualEventEditor
                 if ((Cursor.Position.X < rectList.ElementAt(i).Rect.X + rectList.ElementAt(i).Rect.Width) && (Cursor.Position.X > rectList.ElementAt(i).Rect.X))
                     if ((Cursor.Position.Y < rectList.ElementAt(i).Rect.Y + rectList.ElementAt(i).Rect.Height) && (Cursor.Position.Y > rectList.ElementAt(i).Rect.Y))
                     {
+                        locEditForm.txtLocContent.Text = "";
                         if (locEditForm.ShowDialog() == DialogResult.OK)
                         {
+                           
                             rectList.ElementAt(i).LocName = locEditForm.txtLocName.Text;
                             rectList.ElementAt(i).ShtLocDescription = locEditForm.txtShtLocDescription.Text;
+                            //Create/update file locName.txt                    
+                            //string lines = "# " + rectList.ElementAt(i).LocName + "\r\n" + @"!' " +@rectList.ElementAt(i).ShtLocDescription +@" '"+ "\r\n" + "--- " + rectList.ElementAt(i).LocName + " ---------------------------------";
+
+                            // Write the string to a file.
+                            //string fileName = @"E:\\dev\\Location\\" + rectList.ElementAt(i).LocName.Trim() + ".txt";
+                            //System.IO.StreamWriter file = new System.IO.StreamWriter("E:\\dev\\Location\\" + rectList.ElementAt(i).LocName.Trim() + ".txt");
+                            //file.WriteLine(lines);
+                            //file.Close();
+                            //end txt
+
+                            ////txt2gam convert
+                            //{
+                            //    Process cmd = new Process();
+                            //    cmd.StartInfo.FileName = "cmd.exe";
+                            //    cmd.StartInfo.RedirectStandardInput = true;
+                            //    cmd.StartInfo.UseShellExecute = false;
+                            //    cmd.Start();
+                            //    cmd.StandardInput.WriteLine(@"e:");
+                            //    cmd.StandardInput.WriteLine(@"cd E:\dev\GameConventor");
+                            //    cmd.StandardInput.WriteLine(@".\txt2gam.exe "+fileName+" game.gam");
+                            //    cmd.Kill();                          
+                            //}
+                            ////end convert
+
+                            
                             pictureBox1.Invalidate();
                         }
                     }
@@ -444,6 +438,131 @@ namespace VisualEventEditor
             List<RectObj> rectJson = JsonConvert.DeserializeObject<List<RectObj>>(json);
             rectList = rectJson;
             pictureBox1.Invalidate();
+        }
+
+        private void gENERATECODEToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string gameGamPath = @"E:\dev\game.gam";
+            string mainGameFilePath = @"E:\dev\game.txt";
+            System.IO.StreamWriter fileGame = new System.IO.StreamWriter(mainGameFilePath);
+            for (int i = 0; i < rectList.Count(); i++)
+            {
+                string startLoc= "# " + rectList.ElementAt(i).LocName + "\r\n";
+                string contentLoc = File.ReadAllText("E:\\dev\\Location\\" + rectList.ElementAt(i).LocName + ".txt");
+                string endLoc= "--- " + rectList.ElementAt(i).LocName + " ---------------------------------"+"\r\n";
+                fileGame.Write(startLoc+contentLoc+endLoc);
+            }
+            
+
+
+            //for (int i = 0; i < rectList.Count(); i++)
+            //{
+            //    string lines = "# " + rectList.ElementAt(i).LocName + "\r\n" + @"!' " + @rectList.ElementAt(i).ShtLocDescription + @" '" + "\r\n" + "--- " + rectList.ElementAt(i).LocName + " ---------------------------------";
+
+            //    // Write the string to a file.
+            //    string fileName = @"E:\\dev\\Location\\" + rectList.ElementAt(i).LocName.Trim() + ".txt";
+            //    System.IO.StreamWriter file = new System.IO.StreamWriter("E:\\dev\\Location\\" + rectList.ElementAt(i).LocName.Trim() + ".txt");
+            //    file.WriteLine(lines);
+            //    file.Close();
+            //}
+
+            fileGame.Close();
+
+            //txt2gam convert
+            
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.StandardInput.WriteLine(@"e:");
+            cmd.StandardInput.WriteLine(@"cd E:\dev\GameConventor");
+            cmd.StandardInput.WriteLine(@".\txt2gam.exe E:\dev\game.txt E:\dev\game.gam");
+            cmd.WaitForExit(500);             
+            cmd.Kill();
+
+            //end convert
+
+
+
+            //SQLiteConnection conn = new SQLiteConnection("Data Source=filename.db; Version=3;");
+            //try
+            //{
+            //    conn.Open();
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+
+            //if (conn.State == ConnectionState.Open)
+            //{
+            //    // ******
+            //}
+
+            ////conn.Dispose();
+
+
+            //SQLiteCommand cmd = conn.CreateCommand();
+            //string sql_command = "DROP TABLE IF EXISTS location;"
+            //  + "CREATE TABLE location("
+            //  + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            //  + "locationName TEXT, "
+            //  + "last_name TEXT, "
+            //  + "sex INTEGER, "
+            //  + "birth_date INTEGER);"
+            //  + "INSERT INTO person(first_name, last_name, sex, birth_date) "
+            //  + "VALUES ('John', 'Doe', 0, strftime('%s', '1979-12-10'));"
+            //  + "INSERT INTO person(first_name, last_name, sex, birth_date) "
+            //  + "VALUES ('Vanessa', 'Maison', 1, strftime('%s', '1977-12-10'));"
+            //  + "INSERT INTO person(first_name, last_name, sex, birth_date) "
+            //  + "VALUES ('Ivan', 'Vasiliev', 0, strftime('%s', '1987-01-06'));"
+            //  + "INSERT INTO person(first_name, last_name, sex, birth_date) "
+            //  + "VALUES ('Kevin', 'Drago', 0, strftime('%s', '1991-06-11'));"
+            //  + "INSERT INTO person(first_name, last_name, sex, birth_date) "
+            //  + "VALUES ('Angel', 'Vasco', 1, strftime('%s', '1987-10-09'));";
+            //cmd.CommandText = sql_command;
+            //try
+            //{
+            //    cmd.ExecuteNonQuery();
+            //}
+            //catch (SQLiteException ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+
+
+
+            ////GEBERATE
+            //gtxt.Clear();
+            //for (int i = 1; i <= b.GetListDataFromTable().Count(); ++i)
+            //{
+
+            //    if (i % 2 == 0)
+            //    {
+            //        gtxt.SelectionColor = Color.Blue;
+            //    }
+            //    else
+            //    {
+            //        gtxt.SelectionColor = Color.Red;
+            //    }
+            //    gtxt.AppendText(File.ReadAllText("E:\\dev\\Location\\" + b.GetListDataFromTable().ElementAt(i - 1).FirstName + ".txt"));
+            //}
+            ////GENERATE END
+
+            ////Save txt
+            //string path = "E:\\game.txt";
+            //File.Delete(path);
+            //var newFile = File.Create(path);
+            //newFile.Close();
+            //String[] s = gtxt.Text.Split(new String[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            //for (int i = s.Count() - 1; i >= 0; --i)
+            //{
+            //    var allLines = File.ReadAllLines("E:\\dev\\game.txt").ToList();
+            //    allLines.Insert(0, s.ElementAt(i));
+            //    File.WriteAllLines("E:\\dev\\game.txt", allLines.ToArray());
+            //}
+            ////END Save
         }
 
         private void создатьJSONToolStripMenuItem_Click(object sender, EventArgs e)
