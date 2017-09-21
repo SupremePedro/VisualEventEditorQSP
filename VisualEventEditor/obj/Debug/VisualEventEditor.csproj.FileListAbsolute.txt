@@ -20,3 +20,4 @@ E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\System.Data.SQLite.
 E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\EntityFramework.xml
 E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\EntityFramework.SqlServer.xml
 E:\dev\Project\VisualEventEditor\VisualEventEditor\bin\Debug\System.Data.SQLite.xml
+E:\dev\Project\VisualEventEditor\VisualEventEditor\obj\Debug\VisualEventEditor.TransitionEdit.resources

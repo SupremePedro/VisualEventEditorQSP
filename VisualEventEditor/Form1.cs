@@ -47,6 +47,7 @@ namespace VisualEventEditor
         private Image img;
 
         private LocEditForm locEditForm;
+        private TransitionEdit transitionEdit;
 
         int deltaY = 0;
         int deltaX = 0;
@@ -62,6 +63,7 @@ namespace VisualEventEditor
         List<Point> p1List = new List<Point>();
         List<Point> p2List = new List<Point>();
         List<Point> rectPointList = new List<Point>();
+        List<string> lineName = new List<string>();
 
         public class RectObj
         {
@@ -143,13 +145,27 @@ namespace VisualEventEditor
         }
       
         void add_Item(object sender, EventArgs e)
-        {            
+        {
             RectObj r = new RectObj();
             r.Rect = new Rectangle(100, 100, 200, 100);
             r.IsClicked = false;
-            r.ShtLocDescription =  " rect" + rectList.Count().ToString();
-            r.LocName = "";
+           
 
+
+            locEditForm.txtLocContent.Text = "";
+            locEditForm.txtShtLocDescription.Text = "";
+            locEditForm.txtLocName.Text = "";
+
+
+            if (locEditForm.ShowDialog() == DialogResult.OK)
+            {
+                r.ShtLocDescription = locEditForm.txtShtLocDescription.Text;
+                r.LocName = locEditForm.txtLocName.Text;
+
+                pictureBox1.Invalidate();
+            }
+                   
+            
             
             rectList.Add(r);
             pictureBox1.Invalidate();
@@ -174,7 +190,8 @@ namespace VisualEventEditor
         private void Form1_Load(object sender, EventArgs e)
         {
             locEditForm = new LocEditForm();
-            
+            transitionEdit = new TransitionEdit();
+
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -202,6 +219,7 @@ namespace VisualEventEditor
                 for (int x = 0; x < p1List.Count; x++)
                 {
                     e.Graphics.DrawLine(p, p1List[x], p2List[x]);
+                    e.Graphics.DrawString(lineName[x], new Font("Arial", 16), Brushes.Violet, new Point(-10 +(p1List[x].X + p2List[x].X)/2, -50 +(p1List[x].Y + p2List[x].Y) / 2));
                 }
             }
         }
@@ -274,6 +292,23 @@ namespace VisualEventEditor
                         rectPoint.Y = i;
                         p1List.Add(p1);
                         p2List.Add(p2);
+                        if (transitionEdit.ShowDialog() == DialogResult.OK)
+                        {
+                            lineName.Add(transitionEdit.txtTransitionName.Text);
+
+
+                            //String[] s = txtLocContent.Text.Split(new String[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                            //for (int i = s.Count() - 1; i >= 0; --i)
+                            //{
+                                var allLines = File.ReadAllLines("E:\\dev\\Location\\" + rectList.ElementAt(rectPoint.X).LocName.Trim() + ".txt").ToList();
+                                allLines.Insert(0, "ACT '" + transitionEdit.txtTransitionName.Text + "':" + " \r\n"
+                                        + " gt '" + rectList.ElementAt(rectPoint.Y).LocName + "'" + " \r\n" +
+                                        "END" + " \r\n");
+                                File.WriteAllLines("E:\\dev\\Location\\" + rectList.ElementAt(rectPoint.X).LocName.Trim()+ ".txt", allLines.ToArray());
+                            //}
+                           //file.Close();                           
+                           pictureBox1.Invalidate();
+                        }
 
 
                         rectPointList.Add(rectPoint);
